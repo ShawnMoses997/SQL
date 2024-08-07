@@ -11,5 +11,5 @@ In this repository, you will find a collection of SQL projects and exercises I h
 If you have any questions or would like to discuss any of the projects in more detail, please feel free to reach out to me:
 
 - Email: mosesshawn97@gmail.com
-- LinkedIn: [Your LinkedIn Profile](https://www.linkedin.com/in/yourprofile)
-- GitHub: [Your GitHub Profile](https://github.com/yourusername)
+- LinkedIn: [Your LinkedIn Profile](www.linkedin.com/in/shawn-moses-509344187)
+- GitHub: [Your GitHub Profile]([https://github.com/yourusername](https://github.com/ShawnMoses997))
