@@ -1,0 +1,32 @@
+SELECT distinct location, COUNT(orderID) as num_orders
+FROM BIT_DB.JanSales
+WHERE location LIKE '%NY%'
+AND length(orderid) = 6 
+AND orderid <> 'Order ID'
+GROUP BY location
+HAVING COUNT(orderID)>=3;
+
+SELECT Product, SUM(Quantity) as total_sold
+FROM BIT_DB.FebSales
+WHERE Product LIKE '%headphone%'
+GROUP BY Product;
+
+SELECT ROUND(AVG(quantity*price),2)
+FROM BIT_DB.FebSales feb
+LEFT JOIN BIT_DB.customers cus
+ON feb.orderid = cus.order_id
+WHERE length(orderid) = 6
+AND orderid <> 'Order ID'; 
+
+SELECT sum(quantity)/count(cus.acctnum)
+FROM BIT_DB.FebSales feb
+LEFT JOIN BIT_DB.customers cus
+ON feb.orderid=cus.order_id
+WHERE length(orderid) = 6 
+AND orderid <> 'Order ID';
+
+SELECT Product, SUM(quantity*price) as revenue
+FROM BIT_DB.JanSales
+GROUP BY product
+ORDER BY SUM(quantity*price) DESC
+LIMIT 1;
