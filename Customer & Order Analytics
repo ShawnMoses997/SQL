@@ -1,4 +1,4 @@
-> This project includes queries related to customer and order data
+> In this SQL, I'm querying databases to quantify customer and order data statistics.
 
 > 1. Which locations in New York received at least 3 orders in January, and how many orders did they each receive?
 
