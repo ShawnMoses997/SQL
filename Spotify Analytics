@@ -1,3 +1,7 @@
+> For this project, I downloaded Spotify data from Kaggle.
+> Then I created a table to insert Spotify data into.
+> Finally, I performed analytics on the data using SQL. 
+
 CREATE TABLE BIT_DB.Spotifydata (
 id integer PRIMARY KEY,
 artist_name varchar NOT NULL,
@@ -18,17 +22,24 @@ tempo decimal(6,3) NOT NULL,
 duration_ms integer NOT NULL,
 time_signature integer NOT NULL );
 
-SELECT*
-FROM BIT_DB.Spotifydata;
+> Then I inserted the Spotify Data .csv into the table.
+
+> Next, I explored the data using the following SQL. 
+
+> I determined the average popularity, danceability, and energy by artist and track. 
 
 SELECT artist_name,track_name, avg(popularity), avg(danceability), avg(energy)
 FROM BIT_DB.spotifydata
 GROUP BY artist_name, track_name;
 
+> I then found out which song in the top 50 is the loudest.
+
 SELECT artist_name, track_name, MAX(loudness) as loudest
 FROM BIT_DB.Spotifydata
 GROUP BY track_name
 LIMIT 1;
+
+> I then discovered which song had the highest tempo and a duration above 150000ms or 2.5 minutes.
 
 SELECT track_name, tempo, duration_ms
 FROM BIT_DB.Spotifydata
@@ -36,22 +47,26 @@ WHERE duration_ms > 150000
 ORDER BY tempo DESC
 LIMIT 1;
 
-SELECT track_name
-FROM BIT_DB.Spotifydata
-WHERE artist_name = 'Olivia Rodrigo';
+> I then wanted to find out which songs have a popular score above 85 and featured collaborations with other artists.
 
 SELECT artist_name, track_name, popularity
 FROM BIT_DB.Spotifydata
 WHERE popularity > 85
 AND track_name LIKE '%feat.%';
 
+> With this query I was able to understand the average tempo of Olivia Rodrigo songs.
+
 SELECT AVG(tempo) as average_tempo
 FROM BIT_DB.Spotifydata
 WHERE artist_name = 'Olivia Rodrigo';
 
+> This query helped me find the songs with the highest danceability score and how it correlated with their popularity.
+
 SELECT track_name, danceability, popularity
 FROM BIT_DB.Spotifydata
 ORDER BY danceability DESC;
+
+> I then found out how many songs in the top 50 have a tempo above 120 BPM.
 
 SELECT COUNT(track_name) as number_of_songs_above_120BPM
 FROM BIT_DB.Spotifydata
