@@ -1,0 +1,95 @@
+SELECT g.Name AS Genre, COUNT(t.TrackId) AS NumberOfTracks
+FROM chinook.genres g
+INNER JOIN chinook.tracks t 
+ON g.GenreId = t.GenreId
+GROUP BY g.Name
+ORDER BY NumberOfTracks DESC
+LIMIT 5;
+
+SELECT e.LastName || ', ' || e.FirstName AS Employee, ROUND(SUM(ii.UnitPrice * ii.Quantity),2) AS TotalRevenue
+FROM chinook.employees e
+INNER JOIN chinook.customers c 
+ON e.EmployeeId = c.SupportRepId
+INNER JOIN chinook.invoices i 
+ON c.CustomerId = i.CustomerId
+INNER JOIN chinook.invoice_items ii 
+ON i.InvoiceId = ii.InvoiceId
+GROUP BY Employee
+ORDER BY TotalRevenue DESC;
+
+SELECT ar.Name AS Artist, COUNT(al.AlbumId) AS NumberOfAlbums
+FROM chinook.artists ar
+INNER JOIN chinook.albums al ON ar.ArtistId = al.ArtistId
+GROUP BY ar.Name
+ORDER BY NumberOfAlbums DESC
+LIMIT 10;
+
+SELECT  FirstName || ' ' || LastName AS FullName, CustomerId, Country
+FROM chinook.customers
+WHERE Country <> 'USA';
+
+SELECT FirstName || ' ' || LastName AS FullName, CustomerId, Country
+FROM chinook.customers
+WHERE Country = 'Brazil';
+
+SELECT  c.FirstName || ' ' || c.LastName AS FullName, i.InvoiceId,  i.InvoiceDate, i.BillingCountry
+FROM chinook.customers c
+INNER JOIN chinook.invoices i ON c.CustomerId = i.CustomerId
+WHERE c.Country = 'Brazil';
+
+SELECT  FirstName || ' ' || LastName AS FullName,  Title
+FROM chinook.employees
+WHERE Title = 'Sales Support Agent';
+
+SELECT DISTINCT BillingCountry
+FROM chinook.invoices;
+    
+SELECT e.FirstName || ' ' || e.LastName AS SalesAgent, i.InvoiceId
+FROM chinook.employees e
+INNER JOIN chinook.customers c ON e.EmployeeId = c.SupportRepId
+INNER JOIN chinook.invoices i ON c.CustomerId = i.CustomerId;
+
+SELECT i.Total AS InvoiceTotal, c.FirstName || ' ' || c.LastName AS CustomerName, c.Country, e.FirstName || ' ' || e.LastName AS SalesAgent
+FROM chinook.invoices i
+INNER JOIN chinook.customers c ON i.CustomerId = c.CustomerId
+INNER JOIN chinook.employees e ON c.SupportRepId = e.EmployeeId;
+
+SELECT COUNT(*) AS NumberOfInvoices
+FROM chinook.invoices
+WHERE strftime('%Y', InvoiceDate) = '2009';
+
+SELECT SUM(Total) AS TotalSales
+FROM chinook.invoices
+WHERE strftime('%Y', InvoiceDate) = '2009';
+
+SELECT ii.InvoiceLineId, t.Name AS TrackName
+FROM chinook.invoice_items ii
+INNER JOIN chinook.tracks t ON ii.TrackId = t.TrackId;
+
+SELECT ii.InvoiceLineId, t.Name AS TrackName, ar.Name AS ArtistName
+FROM chinook.invoice_items ii
+INNER JOIN chinook.tracks t ON ii.TrackId = t.TrackId
+INNER JOIN chinook.albums al ON t.AlbumId = al.AlbumId
+INNER JOIN chinook.artists ar ON al.ArtistId = ar.ArtistId;
+
+SELECT t.Name AS TrackName, al.Title AS AlbumName, mt.Name AS MediaType, g.Name AS Genre
+FROM chinook.tracks t
+INNER JOIN chinook.albums al ON t.AlbumId = al.AlbumId
+INNER JOIN chinook.media_types mt ON t.MediaTypeId = mt.MediaTypeId
+INNER JOIN chinook.genres g ON t.GenreId = g.GenreId;
+
+SELECT e.FirstName || ' ' || e.LastName AS SalesAgent, ROUND(SUM(i.Total),2) AS TotalSales
+FROM chinook.employees e
+INNER JOIN chinook.customers c ON e.EmployeeId = c.SupportRepId
+INNER JOIN chinook.invoices i ON c.CustomerId = i.CustomerId
+GROUP BY SalesAgent;
+
+SELECT e.FirstName || ' ' || e.LastName AS SalesAgent, ROUND(SUM(i.Total),2) AS TotalSales
+FROM chinook.employees e
+INNER JOIN chinook.customers c ON e.EmployeeId = c.SupportRepId
+INNER JOIN chinook.invoices i ON c.CustomerId = i.CustomerId
+WHERE strftime('%Y', i.InvoiceDate) = '2009'
+GROUP BY SalesAgent
+ORDER BY TotalSales DESC
+LIMIT 1;
+
